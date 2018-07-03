@@ -4,7 +4,7 @@
 \alias{ch.batchOverlap}
 \title{For each in a set of combinations, run ch.distOverlap Function}
 \usage{
-ch.batchOverlap(values, items, itemSet, df.combns, outFile = NULL)
+ch.batchOverlap(values, items, itemSet, df.combns, numRuns, outFile = NULL)
 }
 \arguments{
 \item{values}{a vector of the values in the distributions.}
@@ -14,6 +14,8 @@ ch.batchOverlap(values, items, itemSet, df.combns, outFile = NULL)
 \item{itemSet}{a vector of items that you want to run the bootstraps for.}
 
 \item{df.combns}{a vector of combinations that identifies the items (by index number of itemSet) whose values should be combined and compared against every other combination in this vector.}
+
+\item{numRuns}{the number of runs to do in the bootstrap.}
 
 \item{outFile}{the name of a text file that will be output as the bootstrap runs.  This is filled incrementally just in case the program dies. DEFAULT = NULL - will not write a file}
 }

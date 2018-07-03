@@ -16,12 +16,12 @@ ch.getItemsFromExperimentFile <- function (experimentFile = NULL, outputFile = N
     stop("experimentFile must be specified")
   }
 
-  dat<-read.table("data.all.Ex2.txt",header = T, quote="\"",sep="\t")
+  dat<-read.table(experimentFile,header = T, quote="\"",sep="\t")
   dat<-dat[dat[[practiceColumn]] != practiceValue,]
   items <- unique(dat[[itemColumn]])
 
   if(!is.null(outputFile)) {
-    write.table(items, "minwooItems.txt", row.names=F, col.names=F, quote=F)
+    write.table(items, outputFile, row.names=F, col.names=F, quote=F)
   }
   return(items)
 }

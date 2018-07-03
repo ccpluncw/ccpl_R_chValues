@@ -86,13 +86,14 @@ ch.distOverlap <- function(xDist, yDist, numRuns) {
 #' @param items a vector that identifies the item that each value is linked to.
 #' @param itemSet a vector of items that you want to run the bootstraps for.
 #' @param df.combns a vector of combinations that identifies the items (by index number of itemSet) whose values should be combined and compared against every other combination in this vector.
+#' @param numRuns the number of runs to do in the bootstrap.
 #' @param outFile the name of a text file that will be output as the bootstrap runs.  This is filled incrementally just in case the program dies. DEFAULT = NULL - will not write a file
 #' @keywords distribution overlap bootstrap values
 #' @return a dataframe with the overlap statistics for each set of distributions compared. See ch.distOverlap
 #' @export
 #' @examples ch.batchOverlap (data$responses, data$items,itemSet,df.combns, "out.txt" )
 
-ch.batchOverlap <- function(values, items, itemSet, df.combns, outFile = NULL) {
+ch.batchOverlap <- function(values, items, itemSet, df.combns, numRuns, outFile = NULL) {
   data <- data.frame(values, items)
 
   numCombinations <- nrow(df.combns)
