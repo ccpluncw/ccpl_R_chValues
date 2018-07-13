@@ -13,6 +13,7 @@
 
 ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params) {
 	library(dplyr)
+	library(chutils)
 
 # #### remove subjects who had computer troubles or did not comply with the cell phone use instructions
 	data <- ch.removeBadSNs(data, snCol, params$removeBadSNFile)

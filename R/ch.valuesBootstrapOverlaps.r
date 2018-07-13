@@ -12,7 +12,6 @@
 
 ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params) {
 ######_____PACKAGES NEEDED FOR CODE______######
-  library(plyr)
   library(chValues)
   library(chutils)
   library(RPushbullet)
