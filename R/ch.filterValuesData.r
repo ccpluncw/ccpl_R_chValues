@@ -9,11 +9,10 @@
 #' @keywords values data filter
 #' @return a dataframe of filtered data.  It also writes the items; the item statistics; and the data; to the files specified in params.
 #' @export
+#' @import chutils
 #' @examples ch.filterValuesData (data=valuesData, "sn", "prompt", "resp", params=parameters)
 
 ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params) {
-	library(dplyr)
-	library(chutils)
 
 # #### remove subjects who had computer troubles or did not comply with the cell phone use instructions
 	data <- ch.removeBadSNs(data, snCol, params$removeBadSNFile)
@@ -59,7 +58,7 @@ ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params
 
 
 	#get item statistics and save them to a dataset.
-	df.itemStats <- as.data.frame(data %>% group_by_(promptCol) %>% summarise (
+	df.itemStats <- as.data.frame(data %>% dplyr::group_by_(promptCol) %>% dplyr::summarise(
 	      medianRT = median(eval(parse(text=RTcol))),
 				tValueMean=mean(tValue),
 				tValueSd=sd(tValue),

@@ -11,10 +11,6 @@
 #' @examples ch.valuesBootstrapOverlaps (data=valuesData, "tValues", "prompt", params=parameters)
 
 ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params) {
-######_____PACKAGES NEEDED FOR CODE______######
-  library(chValues)
-  library(chutils)
-  library(RPushbullet)
 
   #throw an error if the min is less than the max
   if (params$minNumPerSide > params$maxNumPerSide) {
@@ -46,7 +42,7 @@ ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params) {
 
   #notify me that the bootstrap is complete
   pushOut <- paste(getwd(), " ::    :: Values Bootstrap Complete: ", nrow(df.combns)-1, " done.", sep = "")
-  pbPost(type = "note", title="Values Bootstrap Complete", body = pushOut)
+  RPushbullet::pbPost(type = "note", title="Values Bootstrap Complete", body = pushOut)
 
   return(alldat)
 
