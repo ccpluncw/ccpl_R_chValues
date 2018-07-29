@@ -10,6 +10,7 @@
 #' @return a dataframe of filtered data.  It also writes the items; the item statistics; and the data; to the files specified in params.
 #' @export
 #' @import chutils
+#' @importFrom dplyr %>%
 #' @examples ch.filterValuesData (data=valuesData, "sn", "prompt", "resp", params=parameters)
 
 ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params) {
