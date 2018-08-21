@@ -5,12 +5,12 @@
 #' @param valueCol a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.
 #' @param promptCol a string that specifies the name of the column in "data" that contains the prompt for each trial.
 #' @param params a list of parameters that are read in using "ch.readValuesDBfile.r."
-#' @keywords values data bootstrap overlap
+#' @param allItems a boolean to state whether all the items are to be bootsrapped.  If FALSE, then the "itemSetDataFile" in the params list must contain a subset of items to be bootstrapped. DEFAULT = TRUE.
 #' @return a dataframe of the overlaps by probe combination.  It also writes the data to the file (bootstrapOutdataFile) specified in params.
 #' @export
 #' @examples ch.valuesBootstrapOverlaps (data=valuesData, "tValues", "prompt", params=parameters)
 
-ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params) {
+ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params, allItems = T) {
 
   #throw an error if the min is less than the max
   if (params$minNumPerSide > params$maxNumPerSide) {
@@ -23,7 +23,11 @@ ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params) {
     print(paste("Now, minNumPerSide = ", params$minNumPerSide, "and maxNumPerSide = ", params$maxNumPerSide, sep=" "))
   }
 
-  itemSet <-read.table(paste(params$dt.set,params$itemSetDataFile), header=F, sep="\t", quote="\"")
+  if(allItems == T) {
+    itemSet <-read.table(paste(params$dt.set,params$itemSetDataFile), header=F, sep="\t", quote="\"")
+  } else {
+    itemSet <-read.table(params$itemSetDataFile, header=F, sep="\t", quote="\"")
+  }
   #drop extraneous columns and levels
   itemSet <- itemSet[,1]
   itemSet <- factor(itemSet)

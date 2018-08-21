@@ -4,7 +4,7 @@
 \alias{ch.valuesBootstrapOverlaps}
 \title{A function to calculate the overlaps of the values data using a bootstrap}
 \usage{
-ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params)
+ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params, allItems = T)
 }
 \arguments{
 \item{data}{the values dataframe.}
@@ -12,6 +12,8 @@ ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params)
 \item{promptCol}{a string that specifies the name of the column in "data" that contains the prompt for each trial.}
 
 \item{params}{a list of parameters that are read in using "ch.readValuesDBfile.r."}
+
+\item{allItems}{a boolean to state whether all the items are to be bootsrapped.  If FALSE, then the "itemSetDataFile" in the params list must contain a subset of items to be bootstrapped. DEFAULT = TRUE.}
 
 \item{valueCol}{a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.}
 }
@@ -24,7 +26,3 @@ This function calculate the overlaps of the values data using a bootstrap.
 \examples{
 ch.valuesBootstrapOverlaps (data=valuesData, "tValues", "prompt", params=parameters)
 }
-\keyword{bootstrap}
-\keyword{data}
-\keyword{overlap}
-\keyword{values}
