@@ -33,6 +33,19 @@ ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params, allI
   itemSet <- factor(itemSet)
   numItems <- length(itemSet)
 
+  #make all the prompts as similar as possible
+    itemSet <- tolower(trimws(itemSet))
+    data[[promptCol]] <- tolower(trimws(data[[promptCol]]))
+
+    itemsNotInData <- unique(itemSet[! itemSet %in% unique(data[[promptCol]])])
+
+    if (length(itemsNotInData) > 0) {
+      print("these items are in the itemSet, but not in the dataSet")
+      print(itemsNotInData)
+      print("fatalError: All items in itemSet must be in dataSet")
+      stop()
+    }
+
   #create a vector of all possible combinations on one side of the dilemma equation
   df.combns <- ch.combnVector(numItems, params$minNumPerSide,params$maxNumPerSide)
 
