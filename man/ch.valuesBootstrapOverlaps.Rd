@@ -4,7 +4,8 @@
 \alias{ch.valuesBootstrapOverlaps}
 \title{A function to calculate the overlaps of the values data using a bootstrap}
 \usage{
-ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params, allItems = T)
+ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params,
+  allItems = T)
 }
 \arguments{
 \item{data}{the values dataframe.}

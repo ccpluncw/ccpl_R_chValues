@@ -4,7 +4,8 @@
 \alias{ch.batchOverlap}
 \title{For each in a set of combinations, run ch.distOverlap Function}
 \usage{
-ch.batchOverlap(values, items, itemSet, df.combns, numRuns, outFile = NULL)
+ch.batchOverlap(values, items, itemSet, df.combns, numRuns,
+  outFile = NULL)
 }
 \arguments{
 \item{values}{a vector of the values in the distributions.}
