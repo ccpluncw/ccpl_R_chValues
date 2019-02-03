@@ -5,7 +5,7 @@
 \title{Extends ch.batchOverlap to two separate X and Y datasets Function}
 \usage{
 ch.batchOverlapXY(xValues, xItems, yValues, yItems, itemSet, df.combns,
-  outFile = NULL)
+  numRuns = 1000, outFile = NULL)
 }
 \arguments{
 \item{xValues}{a vector of the values in the X Distributions.}
@@ -19,6 +19,8 @@ ch.batchOverlapXY(xValues, xItems, yValues, yItems, itemSet, df.combns,
 \item{itemSet}{a vector of items that you want to run the bootstraps for.}
 
 \item{df.combns}{a vector of combinations that identifies the items (by index number of itemSet) whose values should be combined and compared against every other combination in this vector.}
+
+\item{numRuns}{the number of runs to do in the bootstrap. DEFAULT = 1000}
 
 \item{outFile}{the name of a text file that will be output as the bootstrap runs.  This is filled incrementally just in case the program dies. DEFAULT = NULL - will not write a file}
 }
