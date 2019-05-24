@@ -5,12 +5,13 @@
 #' @param valueCol a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.
 #' @param promptCol a string that specifies the name of the column in "data" that contains the prompt for each trial.
 #' @param params a list of parameters that are read in using "ch.readValuesDBfile.r."
+#' @param combFun If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items. The function must combine the rows of a matrix and return the result as a vector (e.g., rowMeans). The default just flattens the matrix into one large vector. DEFAULT = as.vector
 #' @param allItems a boolean to state whether all the items are to be bootsrapped.  If FALSE, then the "itemSetDataFile" in the params list must contain a subset of items to be bootstrapped. DEFAULT = TRUE.
 #' @return a dataframe of the overlaps by probe combination.  It also writes the data to the file (bootstrapOutdataFile) specified in params.
 #' @export
 #' @examples ch.valuesBootstrapOverlaps (data=valuesData, "tValues", "prompt", params=parameters)
 
-ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params, allItems = T) {
+ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params, combFun = as.vector, allItems = T) {
 
   #throw an error if the min is less than the max
   if (params$minNumPerSide > params$maxNumPerSide) {
@@ -55,11 +56,11 @@ ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params, allI
 
   #Now use df.combns to do the bootstrap.  That is, use the values to index the items and grab samples, if the indexs are NA then ignore.
   #run the bootstrap for each combination
-  alldat <- ch.batchOverlap(data[[valuesCol]], data[[promptCol]], itemSet, df.combns, params$numRuns, outFile = paste(params$dt.set,params$bootstrapOutdataFile))
+  alldat <- ch.batchOverlapFlex(data[[valuesCol]], data[[promptCol]], itemSet, df.combns, params$numRuns, combFun = rowMeans, outFile = paste(params$dt.set,params$bootstrapOutdataFile, sep=""))
 
   #notify me that the bootstrap is complete
-  pushOut <- paste(getwd(), " ::    :: Values Bootstrap Complete: ", nrow(df.combns)-1, " done.", sep = "")
-  RPushbullet::pbPost(type = "note", title="Values Bootstrap Complete", body = pushOut)
+  # pushOut <- paste(getwd(), " ::    :: Values Bootstrap Complete: ", nrow(df.combns)-1, " done.", sep = "")
+  # RPushbullet::pbPost(type = "note", title="Values Bootstrap Complete", body = pushOut)
 
   return(alldat)
 

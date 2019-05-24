@@ -5,7 +5,7 @@
 \title{A function to calculate the overlaps of the values data using a bootstrap}
 \usage{
 ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params,
-  allItems = T)
+  combFun = as.vector, allItems = T)
 }
 \arguments{
 \item{data}{the values dataframe.}
@@ -13,6 +13,8 @@ ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params,
 \item{promptCol}{a string that specifies the name of the column in "data" that contains the prompt for each trial.}
 
 \item{params}{a list of parameters that are read in using "ch.readValuesDBfile.r."}
+
+\item{combFun}{If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items. The function must combine the rows of a matrix and return the result as a vector (e.g., rowMeans). The default just flattens the matrix into one large vector. DEFAULT = as.vector}
 
 \item{allItems}{a boolean to state whether all the items are to be bootsrapped.  If FALSE, then the "itemSetDataFile" in the params list must contain a subset of items to be bootstrapped. DEFAULT = TRUE.}
 
