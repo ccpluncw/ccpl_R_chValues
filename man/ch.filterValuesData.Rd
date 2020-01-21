@@ -15,6 +15,8 @@ ch.filterValuesData(data, snCol, promptCol, valueCol, RTcol, params)
 
 \item{valueCol}{a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.}
 
+\item{RTcol}{a string that specifies the name of the column in "data" that contains the participant's reaction times for the item in each trial.}
+
 \item{params}{a list of parameters that are read in using "ch.readValuesDBfile.r."}
 }
 \value{

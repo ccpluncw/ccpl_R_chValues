@@ -2,7 +2,7 @@
 #'
 #' This function calculate the overlaps of the values data using a bootstrap.
 #' @param data the values dataframe.
-#' @param valueCol a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.
+#' @param valuesCol a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.
 #' @param promptCol a string that specifies the name of the column in "data" that contains the prompt for each trial.
 #' @param params a list of parameters that are read in using "ch.readValuesDBfile.r."
 #' @param combFun If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items. The function must combine the rows of a matrix and return the result as a vector (e.g., rowMeans). The default just flattens the matrix into one large vector. DEFAULT = as.vector

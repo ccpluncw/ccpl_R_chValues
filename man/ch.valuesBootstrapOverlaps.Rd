@@ -10,6 +10,8 @@ ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params,
 \arguments{
 \item{data}{the values dataframe.}
 
+\item{valuesCol}{a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.}
+
 \item{promptCol}{a string that specifies the name of the column in "data" that contains the prompt for each trial.}
 
 \item{params}{a list of parameters that are read in using "ch.readValuesDBfile.r."}
@@ -17,8 +19,6 @@ ch.valuesBootstrapOverlaps(data, valuesCol, promptCol, params,
 \item{combFun}{If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items. The function must combine the rows of a matrix and return the result as a vector (e.g., rowMeans). The default just flattens the matrix into one large vector. DEFAULT = as.vector}
 
 \item{allItems}{a boolean to state whether all the items are to be bootsrapped.  If FALSE, then the "itemSetDataFile" in the params list must contain a subset of items to be bootstrapped. DEFAULT = TRUE.}
-
-\item{valueCol}{a string that specifies the name of the column in "data" that contains the participant's estimate of value for the item in each trial.}
 }
 \value{
 a dataframe of the overlaps by probe combination.  It also writes the data to the file (bootstrapOutdataFile) specified in params.

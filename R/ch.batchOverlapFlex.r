@@ -40,18 +40,17 @@ ch.batchOverlapFlex <- function(values, items, itemSet, df.combns, numRuns, comb
       for(m in 1:maxNumPerSide) {
         itemAarray[i,m] <- toString(itemSet[df.combns[l,m]])
         itemBarray[i,m] <- toString(itemSet[df.combns[k+1,m]])
-        if (!is.na(itemAarray[i,m])) {
+        if (itemAarray[i,m] != "NA") {
           xTmp <- data$values[data$items==itemAarray[i,m]]
           varName <- paste("v", m, sep="")
           xValue[[varName]] <- xTmp
         }
-        if (!is.na(itemBarray[i,m])) {
+        if (itemBarray[i,m] != "NA") {
           yTmp <- data$values[data$items==itemBarray[i,m]]
           varName <- paste("v", m, sep="")
           yValue[[varName]] <- yTmp
         }
       }
-
       #run bootstrap to get overlap information
       pOut <- ch.distOverlapFlex(xValue,yValue,numRuns,combFun = combFun)
 

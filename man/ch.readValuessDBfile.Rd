@@ -7,7 +7,7 @@
 ch.readValuessDBfile(filename = "valuesDBfile.txt")
 }
 \arguments{
-\item{dbfile}{the filename of the dbfile.}
+\item{filename}{the filename of the dbfile.}
 }
 \value{
 a list with all the parameters

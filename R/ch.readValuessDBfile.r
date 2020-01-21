@@ -1,7 +1,7 @@
 #' A function to read the values dbfile
 #'
 #' This function reads the dbfile for the values analysis.  The dbfile contains key words and their values for the analysis.
-#' @param dbfile the filename of the dbfile.
+#' @param filename the filename of the dbfile.
 #' @keywords values dbfile read
 #' @return a list with all the parameters
 #' @export
