@@ -25,8 +25,12 @@ ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params
   if (params$keybRTtransform == "log") {
 		data$tValue <- chutils::ch.altLogTransform(data[[valueCol]])
   } else {
-    data$tValue <- data[[valueCol]]
-  }
+		if(params$keybRTtransform == "none") {
+			data$tValue <- data[[valueCol]]
+		} else {
+			data$tValue <- chutils::ch.altRootTransform(data[[valueCol]], root=params$keybRTtransform)
+  	}
+	}
 
 	#remove SNs based on RT criteria
 	outList <- chutils::ch.filterGrpBtwn(data, RTcol, snCol, lowThresh = params$minMedianRTthreshold, FUN=median)
