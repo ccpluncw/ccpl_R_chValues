@@ -4,7 +4,8 @@
 \alias{ch.combnVector}
 \title{New combinations Function}
 \usage{
-ch.combnVector(numItems, minNumPerSide = 1, maxNumPerSide = 1)
+ch.combnVector(numItems, minNumPerSide = 1, maxNumPerSide = 1,
+  addSelfMatch = TRUE)
 }
 \arguments{
 \item{numItems}{the total number of items used for the combinations.}

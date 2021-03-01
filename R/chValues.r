@@ -11,7 +11,7 @@
 #' @export
 #' @examples ch.combnVector (5, 1,3)
 
-ch.combnVector <- function(numItems, minNumPerSide = 1, maxNumPerSide = 1) {
+ch.combnVector <- function(numItems, minNumPerSide = 1, maxNumPerSide = 1, addSelfMatch = TRUE) {
 
     numSideSeq <- seq(minNumPerSide,maxNumPerSide,1)
 
@@ -20,9 +20,11 @@ ch.combnVector <- function(numItems, minNumPerSide = 1, maxNumPerSide = 1) {
         #get combination
         tmpC <- t(combn(numItems, i))
         #add self matching conditions for item combinations greater than 1
-        if(i > 1) {
-          selfMatch <- array(rep(1:numItems,i), dim=c(numItems,i))
-          tmpC <- rbind(tmpC, selfMatch)
+        if(addSelfMatch) {
+          if(i > 1) {
+            selfMatch <- array(rep(1:numItems,i), dim=c(numItems,i))
+            tmpC <- rbind(tmpC, selfMatch)
+          }
         }
         #fill extra columns with NA and make into a dataframe
         columnsNeeded <- maxNumPerSide - ncol(tmpC)
