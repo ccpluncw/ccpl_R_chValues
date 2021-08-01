@@ -4,9 +4,13 @@
 \alias{ch.getOverlapFile}
 \title{A function to extract a subset of overlaps from a file}
 \usage{
-ch.getOverlapFile(overlapFile = NULL, itemFile = NULL,
-  outputFile = NULL, itemColumn1 = "item1vector",
-  itemColumn2 = "item2vector")
+ch.getOverlapFile(
+  overlapFile = NULL,
+  itemFile = NULL,
+  outputFile = NULL,
+  itemColumn1 = "item1vector",
+  itemColumn2 = "item2vector"
+)
 }
 \arguments{
 \item{overlapFile}{a tab delimited file of a full set of overlaps with all the items.}

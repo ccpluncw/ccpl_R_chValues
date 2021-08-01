@@ -4,8 +4,16 @@
 \alias{ch.batchOverlapFlex}
 \title{For each in a set of combinations, run ch.distOverlapFlex Function}
 \usage{
-ch.batchOverlapFlex(values, items, itemSet, df.combns, numRuns,
-  combFun = as.vector, outFile = NULL)
+ch.batchOverlapFlex(
+  values,
+  items,
+  itemSet,
+  df.combns,
+  numRuns = 1000,
+  outFile = NULL,
+  combFun = ch.maxAveComb,
+  ...
+)
 }
 \arguments{
 \item{values}{a vector of the values in the distributions.}
@@ -16,11 +24,11 @@ ch.batchOverlapFlex(values, items, itemSet, df.combns, numRuns,
 
 \item{df.combns}{a vector of combinations that identifies the items (by index number of itemSet) whose values should be combined and compared against every other combination in this vector.}
 
-\item{numRuns}{the number of runs to do in the bootstrap.}
-
-\item{combFun}{If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items. The function must combine the rows of a matrix and return the result as a vector (e.g., rowMeans). The default just flattens the matrix into one large vector. DEFAULT = as.vector}
+\item{numRuns}{the number of runs to do in the bootstrap. DEFAULT = 1000.}
 
 \item{outFile}{the name of a text file that will be output as the bootstrap runs.  This is filled incrementally just in case the program dies. DEFAULT = NULL - will not write a file}
+
+\item{combFun}{If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items in both the X and Y distributions. The function must combine elements of a list that might be of different different lengths. The default just flattens the list into one large vector.  DEFAULT = ch.maxAveComb  (with probMax = 0.5)}
 }
 \value{
 a dataframe with the overlap statistics for each set of distributions compared. See ch.distOverlap
@@ -29,7 +37,7 @@ a dataframe with the overlap statistics for each set of distributions compared. 
 This function runs ch.distOverlap for all the combinations of distributions identified in df.combns.
 }
 \examples{
-ch.batchOverlap (data$responses, data$items,itemSet,df.combns, "out.txt" )
+ch.batchOverlapFlex (data$responses, data$items,itemSet,df.combns,numRuns=1000, outFile ="out.txt" )
 }
 \keyword{bootstrap}
 \keyword{distribution}

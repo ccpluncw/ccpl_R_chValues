@@ -4,16 +4,16 @@
 \alias{ch.distOverlapFlex}
 \title{Bootstrap the overlap of two distributions Function with a flexible function}
 \usage{
-ch.distOverlapFlex(xDist, yDist, numRuns, combFun = as.vector)
+ch.distOverlapFlex(xDist, yDist, numRuns, combFun = ch.maxAveComb, ...)
 }
 \arguments{
-\item{xDist}{Distribution X.}
+\item{xDist}{a list containing the values for Distribution X.}
 
-\item{yDist}{Distribution Y.}
+\item{yDist}{a list containing the values for Distribution Y.}
 
 \item{numRuns}{the number of runs in the bootstrap. DEFAULT = 100.}
 
-\item{combFun}{If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items. The function must combine the rows of a matrix and return the result as a vector (e.g., rowMeans). The default just flattens the matrix into one large vector. DEFAULT = as.vector}
+\item{combFun}{If there are multiple items contributing to a single distribution, this function describes how the values will be combined across items in both the X and Y distributions. The function must combine elements of a list that might be of different different lengths. The default just flattens the list into one large vector.  DEFAULT = ch.maxAveComb  (with probMax = 0.5)}
 }
 \value{
 the average percentage of samples that xDist was greater than yDist, the sd of the average percentage, Overlap = a transformation of average percentage so 1=complete overlap and 0 = no overlap, direction = 1 if xDist > yDist; else -1
@@ -22,7 +22,7 @@ the average percentage of samples that xDist was greater than yDist, the sd of t
 This function does a bootstrap to calculate the percentage of samples that Distribution X is greater than Distribution Y. When Distribution X (or Y) are the combination of multiple items, then it uses combFun (a function) to combine the values of those items into a single distribution.
 }
 \examples{
-ch.distOverlap (xValue, yValue,100)
+ch.distOverlapFlex (xValue, yValue,100, combFun = ch.maxAveComb, probMax = 0.667)
 }
 \keyword{bootstrap}
 \keyword{distribution}

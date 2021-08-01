@@ -4,8 +4,16 @@
 \alias{ch.batchOverlapXY}
 \title{Extends ch.batchOverlap to two separate X and Y datasets Function}
 \usage{
-ch.batchOverlapXY(xValues, xItems, yValues, yItems, itemSet, df.combns,
-  numRuns = 1000, outFile = NULL)
+ch.batchOverlapXY(
+  xValues,
+  xItems,
+  yValues,
+  yItems,
+  itemSet,
+  df.combns,
+  numRuns = 1000,
+  outFile = NULL
+)
 }
 \arguments{
 \item{xValues}{a vector of the values in the X Distributions.}

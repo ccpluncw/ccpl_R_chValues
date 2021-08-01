@@ -1,4 +1,4 @@
-#' For each in a set of combinations, run ch.distOverlapFlex Function
+#' For each in a set of combinations, run ch.distOverlapFlex Function, multicore version.
 #'
 #' This function runs ch.distOverlap for all the combinations of distributions identified in df.combns.
 #' @param values a vector of the values in the distributions.
@@ -11,9 +11,14 @@
 #' @keywords distribution overlap bootstrap values
 #' @return a dataframe with the overlap statistics for each set of distributions compared. See ch.distOverlap
 #' @export
+#' @importFrom foreach %dopar%
+#' @importFrom foreach %do%
 #' @examples ch.batchOverlapFlex (data$responses, data$items,itemSet,df.combns,numRuns=1000, outFile ="out.txt" )
 
-ch.batchOverlapFlex <- function(values, items, itemSet, df.combns, numRuns=1000, outFile = NULL, combFun = ch.maxAveComb, ...) {
+ch.MCbatchOverlapFlex <- function(values, items, itemSet, df.combns, numRuns=1000, outFile = NULL, combFun = ch.maxAveComb, ...) {
+
+  #set up for multicore processing
+  cl<- setUpParallel ()
 
   data <- data.frame(values, items)
 
@@ -31,42 +36,41 @@ ch.batchOverlapFlex <- function(values, items, itemSet, df.combns, numRuns=1000,
     overlap <- vector(mode="numeric", length = totalNumOverlaps)
     direction <- vector(mode="numeric", length = totalNumOverlaps)
 
-    itemAarray <- array("XX", dim = c(totalNumOverlaps,maxNumPerSide))
-    itemBarray <- array("XX", dim = c(totalNumOverlaps,maxNumPerSide))
+    itemAarray <- array("XX", dim = c(1,maxNumPerSide))
+    itemBarray <- array("XX", dim = c(1,maxNumPerSide))
 
-    i <- 1
-    for(k in l:(numCombinations - 1)){
+    alldat <- foreach::foreach(k=l:(numCombinations - 1), .combine="rbind") %dopar% {
       xValue <- list()
       yValue <- list()
       #get the raw data for each item
       for(m in 1:maxNumPerSide) {
-        itemAarray[i,m] <- toString(itemSet[df.combns[l,m]])
-        itemBarray[i,m] <- toString(itemSet[df.combns[k+1,m]])
-        if (itemAarray[i,m] != "NA") {
-          xValue[[paste("v", m, sep="")]] <- data$values[data$items==itemAarray[i,m]]
+        itemAarray[1,m] <- toString(itemSet[df.combns[l,m]])
+        itemBarray[1,m] <- toString(itemSet[df.combns[k+1,m]])
+        if (itemAarray[1,m] != "NA") {
+          xValue[[paste("v", m, sep="")]] <- data$values[data$items==itemAarray[1,m]]
         }
-        if (itemBarray[i,m] != "NA") {
-          yValue[[paste("v", m, sep="")]] <- data$values[data$items==itemBarray[i,m]]
+        if (itemBarray[1,m] != "NA") {
+          yValue[[paste("v", m, sep="")]] <- data$values[data$items==itemBarray[1,m]]
         }
       }
       #run bootstrap to get overlap information
       pOut <- ch.distOverlapFlex(xValue,yValue,numRuns,combFun = combFun, ...)
-
-      averageP[i] <-pOut["percent"]
-      sdP[i] <-pOut["sd"]
-      overlap[i] <-pOut["overlap"]
-      direction[i] <-pOut["direction"]
-      i=i+1
+      data.frame(itemAarray, itemBarray, averageP = pOut["percent"],sdp = pOut["sd"], overlap = pOut["overlap"],direction = pOut["direction"])
     }
       #put data in dataframe
-      alldat <-data.frame(itemAarray, itemBarray, averageP = averageP,sdp = sdP, overlap = overlap,direction = direction)
+      #alldat <-data.frame(itemAarray, itemBarray, averageP = averageP,sdp = sdP, overlap = overlap,direction = direction)
       #rename columns
-      for(nps in 1:maxNumPerSide) {
-        colnames(alldat)[nps] <- paste("IA", nps, sep="")
-        colnames(alldat)[nps+maxNumPerSide] <- paste("IB", nps, sep="")
+      if(l==1) {
+        for(nps in 1:maxNumPerSide) {
+          colnames(alldat)[nps] <- paste("IA", nps, sep="")
+          colnames(alldat)[nps+maxNumPerSide] <- paste("IB", nps, sep="")
+        }
+        append1 <- FALSE
+        cName1 <- TRUE
+      } else {
+        append1 <- TRUE
+        cName1 <- FALSE
       }
-      append1 <- ifelse(l == 1, FALSE, TRUE)
-      cName1 <- ifelse(l == 1, TRUE, FALSE)
 
       if(!is.null(outFile)) {
         write.table(alldat, file=outFile, quote=F, sep="\t", row.names = F, col.names = cName1, append=append1)
@@ -74,6 +78,9 @@ ch.batchOverlapFlex <- function(values, items, itemSet, df.combns, numRuns=1000,
   }
 
   outData <- read.table(file=outFile, header=T, sep="\t", quote="\"")
+
+  #end multi-core processing
+  endParallel (cl)
 
   return(outData)
 }

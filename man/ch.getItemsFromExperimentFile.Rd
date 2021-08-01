@@ -4,9 +4,13 @@
 \alias{ch.getItemsFromExperimentFile}
 \title{A function to extract a the items present in an experiment file}
 \usage{
-ch.getItemsFromExperimentFile(experimentFile = NULL, outputFile = NULL,
-  itemColumn = "ItemX", practiceColumn = "typeOfScen",
-  practiceValue = "practice")
+ch.getItemsFromExperimentFile(
+  experimentFile = NULL,
+  outputFile = NULL,
+  itemColumn = "ItemX",
+  practiceColumn = "typeOfScen",
+  practiceValue = "practice"
+)
 }
 \arguments{
 \item{experimentFile}{a tab delimited file with data from the experiment.}
