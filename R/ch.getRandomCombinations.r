@@ -5,17 +5,18 @@
 #' creates data frame that has every possible combination of the rows of each list.
 #' This function effectively handles modifiers, but intelligently selecting modifiers and items separately.
 #'
-#' @param itemFileName A string that specifies the filename and path of the item file. The itemfile should be tab
-#' delimited and have the following format:  Item <tab> Modifier1 <tab> Modifier2 <tab> etc. The modifiers are the possible
+#' @param df.expItems A dataframe that contains the item information. The dataframe should contain the following columns:
+#' Item,  Modifier1,  Modifier2,  etc. The modifiers are optional and are the possible
 #' modifiers for the Item and will be presented in front of the item.
 #' @param df.groups A dataframe that has a column for each group (2 groups = 2 columns) and a row for each group size combination. So if you want one item in each group, the dataframe would be data.frame(g1 = c(1), g2 = c(1)).  If you want every size combination of 1 and 2 items in each group, you would have: data.frame(g1 = c(1, 2, 1, 2), g2 = c(1, 1, 2, 2))
 #' @param nStimPerGroup An integer specifying the number of stimuli to sample per group .
+#' @param illegalPatterns A dataframe that specifies the exact illegal patterns.  These patterns, when generated, will be discarded and replaced. If this is NULL, then all generated patterns will be kept. DEFAULT = NULL.
 #' @keywords combination items random choice
 #' @return dataframe with the all the combinations. The columns are labled IA.# and IB.# to indicate the group.:
 #' @export
 #' @examples ch.getRandomCombinations (itemSet = c("item1","item2","item3", "item4"), df.groups = data.frame(g1 = c(1, 2, 1, 2), g2 = c(1, 1, 2, 2)), nStimPerGroup = 1000)
 
-ch.getRandomCombinations <- function (itemfileName, df.groups, numStimPerGroup) {
+ch.getRandomCombinations <- function (df.expItems, df.groups, numStimPerGroup, illegalPatterns = NULL) {
 
   # get maximum and minimum number of items per side
   maxNumPerSide <- max(df.groups)
@@ -23,28 +24,27 @@ ch.getRandomCombinations <- function (itemfileName, df.groups, numStimPerGroup) 
   # get the total number of groups
   numGroups <- nrow(df.groups)
 
-  # read in items and any modificiations. First column is items, remaining columns are modificiations
-  expItems <- read.table(itemfileName, header=F, sep="\t", quote="\"")
-  numCols <- ncol(expItems)
-  names(expItems)[1] <- c("Item")
+  # First column is items, remaining columns are modificiations
+  numCols <- ncol(df.expItems)
+  names(df.expItems)[1] <- c("Item")
 
   #create a dataframe with items and modifications, and a separate dataframe with all possible combinations of item/modifications
   probes <- NULL
   if(numCols > 1) {
     for(i in 2:numCols) {
       modCol <- paste("mod", i-1, sep="")
-      names(expItems)[i] <- modCol
-      probes[[modCol]] <- paste(expItems[[modCol]], expItems$Item, sep = " ")
+      names(df.expItems)[i] <- modCol
+      probes[[modCol]] <- paste(df.expItems[[modCol]], df.expItems$Item, sep = " ")
     }
   } else {
     #if there are no Mods, then the probe itself acts as a mod.
     modCol <- paste("mod", 1, sep="")
-    probes[[modCol]] <- expItems$Item
+    probes[[modCol]] <- df.expItems$Item
   }
   probes <- data.frame(probes)
 
   #get the number of items and number of modifications
-  numItems <- nrow(expItems)
+  numItems <- nrow(df.expItems)
   numMods <- numCols - 1
   #if there are no Mods, then the probe itself acts as a mod.
   if(numMods == 0) numMods <- 1
@@ -76,6 +76,25 @@ ch.getRandomCombinations <- function (itemfileName, df.groups, numStimPerGroup) 
       if(nrow(iA)==nrow(iB)) {
         while(dplyr::all_equal(iA, iB)==TRUE) {
           iA <- data.frame (sampRows = sample(itemSeq, df.groups[l,1], replace=F), sampCols = sample(modSeq, df.groups[l,1], replace = T))
+          iB <- data.frame (sampRows = sample(itemSeq, df.groups[l,2], replace=F), sampCols = sample(modSeq, df.groups[l,2], replace = T))
+        }
+      }
+
+      #Now make remove illegal patterns
+      if(!is.null(illegalPatterns)) {
+        #flatten rows into separate strings
+        row_strings <- do.call(paste0, illegalPatterns)
+        #flatten iA string
+        check_string.iA <- paste0(iA, collapse = "")
+        #flatten iB string
+        check_string.iB <- paste0(iB, collapse = "")
+        
+        #check if iA string is an illegal pattern
+        while(check_string.iA %in% row_strings==TRUE) {
+          iA <- data.frame (sampRows = sample(itemSeq, df.groups[l,1], replace=F), sampCols = sample(modSeq, df.groups[l,1], replace = T))
+        }
+        #check if iB string is an illegal pattern
+        while(check_string.iB %in% row_strings==TRUE) {
           iB <- data.frame (sampRows = sample(itemSeq, df.groups[l,2], replace=F), sampCols = sample(modSeq, df.groups[l,2], replace = T))
         }
       }

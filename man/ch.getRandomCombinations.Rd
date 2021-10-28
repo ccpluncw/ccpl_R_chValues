@@ -4,14 +4,21 @@
 \alias{ch.getRandomCombinations}
 \title{A function to creates a data frame composed of two sets of combinations (take n items r at a time, order doesn't matter). This function chooses items randomly and effectively handles item modifiers}
 \usage{
-ch.getRandomCombinations(itemfileName, df.groups, numStimPerGroup)
+ch.getRandomCombinations(
+  df.expItems,
+  df.groups,
+  numStimPerGroup,
+  illegalPatterns = NULL
+)
 }
 \arguments{
+\item{df.expItems}{A dataframe that contains the item information. The dataframe should contain the following columns:
+Item,  Modifier1,  Modifier2,  etc. The modifiers are optional and are the possible
+modifiers for the Item and will be presented in front of the item.}
+
 \item{df.groups}{A dataframe that has a column for each group (2 groups = 2 columns) and a row for each group size combination. So if you want one item in each group, the dataframe would be data.frame(g1 = c(1), g2 = c(1)).  If you want every size combination of 1 and 2 items in each group, you would have: data.frame(g1 = c(1, 2, 1, 2), g2 = c(1, 1, 2, 2))}
 
-\item{itemFileName}{A string that specifies the filename and path of the item file. The itemfile should be tab
-delimited and have the following format:  Item <tab> Modifier1 <tab> Modifier2 <tab> etc. The modifiers are the possible
-modifiers for the Item and will be presented in front of the item.}
+\item{illegalPatterns}{A dataframe that specifies the exact illegal patterns.  These patterns, when generated, will be discarded and replaced. If this is NULL, then all generated patterns will be kept. DEFAULT = NULL.}
 
 \item{nStimPerGroup}{An integer specifying the number of stimuli to sample per group .}
 }

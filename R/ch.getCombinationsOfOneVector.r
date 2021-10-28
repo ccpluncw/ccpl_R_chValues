@@ -21,7 +21,10 @@
 ch.getCombinationsOfOneVector <- function(itemSet, minNumPerSide = 1, maxNumPerSide = 2, sample = "all", nStimPerGroup = 0) {
   nItems <- length(itemSet)
   df.tmp <- ch.combnVector (nItems, minNumPerSide,maxNumPerSide)
-  df.tmp <- df.tmp[1:(nrow(df.tmp)-nItems),]
+  if(maxNumPerSide > 1) {
+    #remove pairs of identical items
+    df.tmp <- df.tmp[1:(nrow(df.tmp)-nItems),]
+  }
 
   df.tmp$stimPerGroup <- length(df.tmp) - rowSums(is.na(df.tmp))
 

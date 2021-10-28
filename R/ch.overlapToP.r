@@ -12,6 +12,11 @@ ch.overlapToP <- function (overlap) {
   #here, as overlap moves greater than 1, that means that D2 starts to become the greater distribution.
   #p gives you the probability of choosing D1.  This vacillates between 0-1 as the overlap changes.
 
+  #the natural bounds of overlap of 0 and 2.  For 0, then D1 is greater than D2 completely.  For 1, then D1 == D2.  For 2, then D1 < D2 completely.
+  #So, bound overlap at the low end (0).
+  overlap <- ifelse(overlap < 0, 0, overlap)
+  #and bound overlap at the high end (2)
+  overlap <- ifelse(overlap > 2, 2, overlap)
   #first get the modulo of overlap by 4 (this only has an influence if overlap is greater than 4! it should be between 0 and 1)
   ovMod4 <- overlap %% 4
   #then correct the overlap to vacillate properly beween 1 and 0. Again, this only has an influence if overlap is greater than abs(2).

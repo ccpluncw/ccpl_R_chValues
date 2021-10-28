@@ -33,10 +33,14 @@ ch.valuesBootstrapOverlaps <- function (data, valuesCol, promptCol, params, allI
   #drop extraneous columns and levels
   itemSet <- itemSet[,1]
   itemSet <- factor(itemSet)
-  numItems <- length(itemSet)
 
   #make all the prompts as similar as possible
     itemSet <- tolower(trimws(itemSet))
+    #remove duplicates
+    itemSet <- unique(itemSet)
+    itemSet <- na.omit(itemSet)
+    numItems <- length(itemSet)
+
     data[[promptCol]] <- tolower(trimws(data[[promptCol]]))
 
     itemsNotInData <- unique(itemSet[! itemSet %in% unique(data[[promptCol]])])
