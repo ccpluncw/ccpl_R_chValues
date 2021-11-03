@@ -20,6 +20,7 @@ ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params
 	data <- chutils::ch.removeBadSNs(data, snCol, params$removeBadSNFile)
 
 #######_____REMOVE RESP ABOVE MAX PERCENTILE THRESHOLD_____#######
+	data[[promptCol]] <- as.factor(data[[promptCol]])
   data[[promptCol]]<-droplevels(data[[promptCol]])
 
   if (params$keybRTtransform == "log") {
@@ -28,7 +29,7 @@ ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params
 		if(params$keybRTtransform == "none") {
 			data$tValue <- data[[valueCol]]
 		} else {
-			data$tValue <- chutils::ch.altRootTransform(data[[valueCol]], root=params$keybRTtransform)
+			data$tValue <- chutils::ch.altRootTransform(data[[valueCol]], root=as.numeric(as.character(params$keybRTtransform)))
   	}
 	}
 
