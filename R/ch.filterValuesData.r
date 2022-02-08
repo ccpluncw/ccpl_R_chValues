@@ -52,15 +52,15 @@ ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params
 
 	statsOutFN <- paste(params$dt.set, params$statsOutputFilename)
  	sink(statsOutFN, append=F)
-	 	cat("\nminMedianRTthreshold\n\t",params$minMedianRTthreshold)
-		cat("\nN subs RM RT Threshold:\n\t", numSN.belowRTthresh)
+	 	cat("\nminMedianRTthreshold: ",params$minMedianRTthreshold, "\n")
+		cat("\nN subs RM RT Threshold: ", numSN.belowRTthresh, "\n")
 		print(sn.removed.belowRTthresh)
-		cat("\nmedianTrespThresh\n\t",params$medianTrespThresh)
-		cat("\nN subs RM tValues Threshold:\n\t", numSN.belowTValuesThresh)
+		cat("\nmedianTrespThresh: ",params$medianTrespThresh, "\n")
+		cat("\nN subs RM tValues Threshold: ", numSN.belowTValuesThresh, "\n")
 		print(sn.removed.belowTValuesThresh)
-		cat("\nlowRTthreshold\n\t",params$lowRTthreshold )
- 		cat("\nhighRTthreshold\n\t",params$highRTthreshold)
-	 	cat("\nprop datapoints RM:\n\t", pRTremoved)
+		cat("\nlowRTthreshold: ",params$lowRTthreshold, "\n" )
+ 		cat("\nhighRTthreshold: ",params$highRTthreshold, "\n")
+	 	cat("\nprop datapoints RM: ", pRTremoved, "\n")
  	sink(NULL)
 
 
