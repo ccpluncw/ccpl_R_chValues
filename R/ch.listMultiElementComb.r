@@ -15,6 +15,7 @@ ch.listMultiElementComb <- function(list.data, combType = "mean", replace = TRUE
     #find the minimum length
     minN <-min(lengths(list.data))
     #get the number of elements in the max column and ave columns
+    #shuffle order of rows in every column independently, so that on every run, the means and sums are a different combination of observations
     df.tmp <- data.frame(lapply(list.data, sample, size=minN, replace=replace, prob=NULL))
     if(combType == "mean") {
       outVec <- rowMeans(df.tmp)

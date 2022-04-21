@@ -46,7 +46,7 @@ ch.batchOverlapPromptFile <- function(values, items, df.prompts, itemAcolNames =
   itemBarray <- array("XX", dim = c(1,maxNumItemB))
 
 
-  alldat <- data.frame(itemAarray = character(totalNumOverlaps), itemBarray= character(totalNumOverlaps), averageP = numeric(totalNumOverlaps),sdp  = numeric(totalNumOverlaps), overlap = numeric(totalNumOverlaps),direction = numeric(totalNumOverlaps))
+  alldat <- data.frame(matrix(ncol = (maxNumItemA), nrow = totalNumOverlaps),matrix(ncol = (maxNumItemB), nrow = totalNumOverlaps), averageP = numeric(totalNumOverlaps),sdp  = numeric(totalNumOverlaps), overlap = numeric(totalNumOverlaps),direction = numeric(totalNumOverlaps))
   for(l in 1:totalNumOverlaps){
     if(verbose) {
       print(paste(l, "of", totalNumOverlaps, sep=" "))
