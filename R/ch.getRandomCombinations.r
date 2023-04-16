@@ -85,17 +85,36 @@ ch.getRandomCombinations <- function (df.expItems, df.groups, numStimPerGroup, i
         #flatten rows into separate strings
         row_strings <- do.call(paste0, illegalPatterns)
         #flatten iA string
-        check_string.iA <- paste0(iA, collapse = "")
+        tmpArray <- NULL
+        for(m in 1:length(iA$sampRows)) {
+          tmpArray[m] <- as.character(probes[iA$sampRows[m],iA$sampCols[m]])
+        }
+        check_string.iA <- paste0(tmpArray, collapse = "")
+        #for every item in iB, add the item into the itemBarray
         #flatten iB string
-        check_string.iB <- paste0(iB, collapse = "")
-        
+        for(m in 1:length(iB$sampRows)) {
+          tmpArray[m] <- as.character(probes[iB$sampRows[m],iB$sampCols[m]])
+        }
+        check_string.iB <- paste0(tmpArray, collapse = "")
+
+
         #check if iA string is an illegal pattern
-        while(check_string.iA %in% row_strings==TRUE) {
+        while((check_string.iA %in% row_strings)==TRUE) {
+print(check_string.iA)
           iA <- data.frame (sampRows = sample(itemSeq, df.groups[l,1], replace=F), sampCols = sample(modSeq, df.groups[l,1], replace = T))
+          for(m in 1:length(iA$sampRows)) {
+            tmpArray[m] <- as.character(probes[iA$sampRows[m],iA$sampCols[m]])
+          }
+          check_string.iA <- paste0(tmpArray, collapse = "")
         }
         #check if iB string is an illegal pattern
-        while(check_string.iB %in% row_strings==TRUE) {
+        while((check_string.iB %in% row_strings)==TRUE) {
+print(check_string.iB)
           iB <- data.frame (sampRows = sample(itemSeq, df.groups[l,2], replace=F), sampCols = sample(modSeq, df.groups[l,2], replace = T))
+          for(m in 1:length(iB$sampRows)) {
+            tmpArray[m] <- as.character(probes[iB$sampRows[m],iB$sampCols[m]])
+          }
+          check_string.iB <- paste0(tmpArray, collapse = "")
         }
       }
 

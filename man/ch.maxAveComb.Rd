@@ -7,9 +7,9 @@
 ch.maxAveComb(list.data, probMax = 0.5)
 }
 \arguments{
-\item{probMax}{A probability that specifies the probability of samples that should be devoted to the column with the max(median()). DEFAULT = 0.5 (so it is simply a collapsing into a vector (as.vector)); (probMax = .8 will produce a distribution in which .4 of the total are all the items (including the max) and .6 of the total are MAX items.)}
+\item{list.data}{A list with each element filled with numbers.}
 
-\item{df.data}{A list with each element filled with numbers.}
+\item{probMax}{A probability that specifies the probability of samples that should be devoted to the column with the max(median()). When probMax = 0, the column with the max(median()) has no influence on either the average or above and beyond the average.  When probMax = 0.5, the column with the max(median()) is 50 percent of the output vector.  This is simply collapsing into a vector (as.vector) when there are only 2 vectors in the list. But it will have an outsized influence if there are more than two vector in the list.  When probMax = 1, the column with the max(median()) is 100 percent of the output vector.  DEFAULT = 0.5 (equal influence for two vectors)(probMax = .8 will produce a distribution in which .4 of the total are all the items (including the max) and .6 of the total are MAX items - when there are only two vectors in the list). Use ch.getProbMax() to calculate the appropriate probMax.}
 }
 \value{
 a vector of values that combines all the columns in df.data with probMax samples devoted to the column with the max(median())
@@ -18,7 +18,7 @@ a vector of values that combines all the columns in df.data with probMax samples
 This function combines a list into a single vector controling the percent of observations devoted to the list element with the max median.
 }
 \examples{
-ch.maxAveComb (df.data, probMax = .7)
+ch.maxAveComb (list.data, probMax = .8)
 }
 \keyword{combine}
 \keyword{function}
