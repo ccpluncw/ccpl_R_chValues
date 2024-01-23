@@ -78,7 +78,9 @@ ch.MCbatchOverlapPromptFile <- function(values, items, df.prompts, itemAcolNames
       }
       #run bootstrap to get overlap information
       pOut <- ch.distOverlapFlex(xValue,yValue,numRuns,combFun = combFun, ...)
+
       data.frame(itemAarray, itemBarray, averageP = pOut["percent"],sdp = pOut["sd"], overlap = pOut["overlap"],direction = pOut["direction"])
+
   }
 
   #rename columns

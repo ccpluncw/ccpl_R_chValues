@@ -23,6 +23,12 @@ ch.listMultiElementComb <- function(list.data, combType = "mean", replace = TRUE
     if(combType == "sum") {
       outVec <- rowSums(df.tmp)
     }
+    if(combType == "min") {
+      outVec <- do.call(pmin, df.tmp)
+    }
+    if(combType == "max") {
+      outVec <- do.call(pmax, df.tmp)
+    }
 
   } else {
     #if there is only one column, then output it
