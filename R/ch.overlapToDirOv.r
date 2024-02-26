@@ -13,7 +13,7 @@ ch.overlapToDirOv <- function(overlap, direction) {
     stop("Direction must equal 1 or -1")
   }
   #change direction if overlap is an odd number
-  if(trunc(overlap)%%2 == 1) {
+  if(overlap > 1) {
     direction <- direction * -1
   }
   #convert overlap to p to get rid of overlaps greater than 1
