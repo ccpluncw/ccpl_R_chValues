@@ -14,7 +14,7 @@
 ch.getValuesSummaryStats <- function (data, promptCol, valueCol, RTcol, outFile = NULL) {
 
 #get item statistics and save them to a dataset.
-	df.itemStats <- as.data.frame(data %>% dplyr::group_by_(promptCol) %>% dplyr::summarise(
+	df.itemStats <- as.data.frame(data %>% dplyr::group_by(across(all_of(promptCol))) %>% dplyr::summarise(
 	      medianRT = median(eval(parse(text=RTcol))),
 				valueMean=mean(eval(parse(text=valueCol))),
 				valueSD=sd(eval(parse(text=valueCol))),

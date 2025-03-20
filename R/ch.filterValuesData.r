@@ -65,7 +65,7 @@ ch.filterValuesData <- function (data, snCol, promptCol, valueCol, RTcol, params
 
 
 	#get item statistics and save them to a dataset.
-	df.itemStats <- as.data.frame(data %>% dplyr::group_by_(promptCol) %>% dplyr::summarise(
+	df.itemStats <- as.data.frame(data %>% dplyr::group_by(across(all_of(promptCol))) %>% dplyr::summarise(
 	      medianRT = median(eval(parse(text=RTcol))),
 				tValueMean=mean(tValue),
 				tValueSd=sd(tValue),
